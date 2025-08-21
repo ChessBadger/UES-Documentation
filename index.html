@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>United Edit Suite – Documentation</title>
+    <meta
+      name="description"
+      content="Official user guide for United Edit Suite: setup, workflows, reports, audits, and troubleshooting."
+    />
+    <style>
+      /* ===== Theme ===== */
+      :root {
+        --bg: #0b0e12;
+        --surface: #11151b;
+        --surface-2: #0f1318;
+        --text: #e8ecf1;
+        --muted: #9aa3b2;
+        --accent: #6aa8ff;
+        --accent-2: #2dd4bf;
+        --border: #1e2530;
+        --link: #8ec9ff;
+        --code: #e7e9ee;
+        --code-bg: #0c1117;
+        --danger: #ff6b6b;
+        --warn: #f7b955;
+        --success: #39d98a;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+      [data-theme="light"] {
+        --bg: #f7f9fc;
+        --surface: #ffffff;
+        --surface-2: #f1f5f9;
+        --text: #0b1220;
+        --muted: #52607a;
+        --accent: #0d6efd;
+        --accent-2: #0ead9a;
+        --border: #e2e8f0;
+        --link: #0b6bff;
+        --code: #0b1220;
+        --code-bg: #eef2f7;
+        --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font: 400 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI,
+          Roboto, Helvetica, Arial;
+        background: var(--bg);
+        color: var(--text);
+      }
+      a {
+        color: var(--link);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* ===== Layout ===== */
+      .app {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 0;
+        min-height: 100vh;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: 100vh;
+        overflow: auto;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+      }
+      main {
+        padding: 32px 40px;
+        overflow: hidden;
+      }
+
+      /* Sidebar */
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 18px 10px;
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: var(--shadow);
+      }
+      .brand h1 {
+        font-size: 16px;
+        margin: 0;
+      }
+      .search {
+        padding: 12px 16px;
+      }
+      .search input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text);
+        border-radius: 10px;
+        outline: none;
+      }
+      .toc {
+        padding: 4px 8px 24px;
+      }
+      .toc a {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: var(--text);
+      }
+      .toc a.small {
+        padding-left: 24px;
+        color: var(--muted);
+      }
+      .toc a:hover {
+        background: var(--surface-2);
+      }
+
+      /* Content */
+      .page-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .page-title h2 {
+        font-size: 28px;
+        margin: 0 0 8px;
+      }
+      .badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--muted);
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+      }
+      .toolbar {
+        display: flex;
+        gap: 10px;
+      }
+      .btn {
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: var(--surface-2);
+      }
+
+      section {
+        padding: 18px 0 8px;
+        border-bottom: 1px solid var(--border);
+      }
+      section:last-of-type {
+        border-bottom: none;
+      }
+      h3 {
+        margin: 0 0 8px;
+        font-size: 22px;
+      }
+      h4 {
+        margin: 18px 0 6px;
+        font-size: 18px;
+      }
+      p {
+        margin: 8px 0;
+      }
+      ul {
+        margin: 8px 0 8px 20px;
+      }
+      .callout {
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin: 10px 0;
+      }
+      .callout.warn {
+        border-color: #b98518;
+        background: linear-gradient(0deg, rgba(183, 138, 29, 0.1), transparent);
+      }
+      .callout.danger {
+        border-color: #7a2020;
+        background: linear-gradient(0deg, rgba(162, 42, 42, 0.14), transparent);
+      }
+      .callout.success {
+        border-color: #1e7f4d;
+        background: linear-gradient(0deg, rgba(16, 185, 129, 0.1), transparent);
+      }
+
+      /* Tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+      }
+      thead th {
+        background: var(--surface-2);
+        font-weight: 600;
+      }
+
+      /* Code-ish */
+      code {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        padding: 2px 6px;
+        border-radius: 6px;
+        color: var(--code);
+      }
+      pre {
+        background: var(--code-bg);
+        color: var(--code);
+        padding: 14px;
+        border-radius: 12px;
+        overflow: auto;
+        border: 1px solid var(--border);
+      }
+
+      /* Footer */
+      footer {
+        margin-top: 24px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      /* Utilities */
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+        font-size: 12px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-bottom-width: 2px;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      .grid {
+        display: grid;
+        gap: 12px;
+      }
+      .grid.cols-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .pill {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--muted);
+      }
+      .status-dot.ok {
+        background: var(--success);
+      }
+      .status-dot.warn {
+        background: var(--warn);
+      }
+      .status-dot.err {
+        background: var(--danger);
+      }
+
+      @media (max-width: 1000px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        nav {
+          position: relative;
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <nav>
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <h1>United Edit Suite</h1>
+        </div>
+        <div class="search">
+          <input
+            id="search"
+            type="search"
+            placeholder="Search in page (⌘/Ctrl + K)"
+            aria-label="Search"
+          />
+        </div>
+        <div id="toc" class="toc" aria-label="Table of contents"></div>
+      </nav>
+
+      <main>
+        <div class="page-title">
+          <div>
+            <h2 id="overview">Documentation</h2>
+            <div class="badges">
+              <span class="badge"
+                >Last updated: <span id="lastUpdated"></span
+              ></span>
+              <span class="badge">Scope: Inventory & Audits</span>
+              <span class="badge">App: United Edit Suite</span>
+            </div>
+          </div>
+          <div class="toolbar">
+            <button class="btn" id="themeToggle" title="Toggle light/dark">
+              🌓 Theme
+            </button>
+          </div>
+        </div>
+
+        <section id="what-is">
+          <h3>What is United Edit Suite?</h3>
+          <p>
+            <strong>United Edit Suite (UES)</strong> is a companion tool for the
+            United inventory platform. It automatically detects the connected
+            United version and loads the active customer’s data. The default
+            view lists
+            <em>areas that have been counted and not marked as printed</em>;
+            items already printed disappear from this list, and items not yet
+            counted don’t appear. Filters let you include printed items or show
+            not-yet-counted areas.
+          </p>
+          <div class="callout warn">
+            <strong>Menu depth rule:</strong> Keep United open but do not be
+            deeper than one level inside submenus while using UES. Being in the
+            final file or >1 level deep can lock files and trigger errors until
+            you back out. Use UES freely from high-level menus like Inventory
+            Proofing.
+          </div>
+          <p>
+            Use the <strong>Refresh</strong> button whenever changes occur in
+            United (new uploads, items marked as printed). Refresh syncs those
+            changes into UES.
+          </p>
+        </section>
+
+        <section id="selection">
+          <h3>Selecting Areas</h3>
+          <ul>
+            <li>
+              Click to select individual areas; click–drag for multi-select.
+            </li>
+            <li>
+              With areas selected, choose
+              <strong>View Reports</strong> (financial-style) or
+              <strong>View Scan Reports</strong> (pieces/units style).
+            </li>
+          </ul>
+        </section>
+
+        <section id="reports">
+          <h3>Reports (Financial-style)</h3>
+          <p>
+            The <strong>View Reports</strong> window mirrors United’s printed
+            report style and supports in-place editing with helpful tooltips.
+          </p>
+          <h4>Visibility controls</h4>
+          <ul>
+            <li>
+              Toggle <strong>Categories</strong> and
+              <strong>Category Groups</strong> to adjust report granularity.
+            </li>
+            <li>
+              When viewing by groups, clicking a group number toggles
+              (hides/shows) underlying categories.
+            </li>
+          </ul>
+          <h4>Bulk actions</h4>
+          <ul>
+            <li>
+              <strong>Move area</strong>: Click an <em>area number</em> to move
+              all its locations to a new area number.
+            </li>
+            <li>
+              <strong>Rename area</strong>: Click an
+              <em>area description</em> to edit or annotate.
+            </li>
+            <li>
+              <strong>Relabel location</strong>: Click a
+              <em>location number</em> to renumber. You can target one or
+              multiple employees or <em>All</em>.
+            </li>
+            <li>
+              <strong>Edit location description</strong>: Click description to
+              change text or add notes. Right-click →
+              <em>Mark as Gone</em> prefixes “Gone ” to the name.
+            </li>
+            <li>
+              <strong>New Location…</strong>: Add a location with description/notes. This writes to United
+              Location Setup and seeds a prior of $0 so the location appears on
+              reports.
+            </li>
+            <li>
+              <strong>Quick Edit…</strong>: Quickly change or swap area/location
+              numbers (e.g., swap 03090↔03100, set multiple to 03070).
+            </li>
+            <li>
+              <strong>Move category</strong>: Click a
+              <em>category number</em> to move it. If grouped, pick a category
+              with data.
+            </li>
+          </ul>
+          <h4>Visual indicators</h4>
+          <ul>
+            <li>
+              <span class="pill"
+                ><span class="status-dot ok"></span> 🧑‍🤝‍🧑 Multiple employees
+                counted this location.</span
+              >
+            </li>
+            <li class="pill">
+              <span class="status-dot warn"></span> ⚠️ Location total is $0 but
+              there were priors.
+            </li> <br
+            <li class="pill">
+              <span class="status-dot err"></span>
+              <span style="color: var(--danger)">Red category rows</span> =
+              previously counted here, but missing in current inventory.
+            </li>
+          </ul>
+           <h4>Split Window</h4>
+              <ol>
+                <li>
+                  Open <strong>Edit</strong> on a location, choose employee (if
+                  multiple).
+                </li>
+                <li>
+                  Pick the exact boundary record (by SKU or price point, e.g.,
+                  $4.49). UES previews remaining totals for current vs. new
+                  location/area.
+                </li>
+                <li>
+                  Use <strong>Search Record</strong> if multiple matches exist;
+                  choose field (price, SKU, etc.), then select the unique match
+                  to complete the split.
+                </li>
+              </ol>
+          <h4>Category change & manual entry (in-report edit)</h4>
+          <ul>
+            <li>
+              <strong>Category Change…</strong>: Choose any category present in
+              the location, pick a <em>new category</em>, and enter the amount
+              to shift (e.g., move $500 from 14 → 3). UES applies the adjustment
+              and updates totals.
+            </li>
+            <li>
+              <strong>Manual Entry…</strong>: Like United’s manual entry but
+              prefilled with the chosen location. Enter category + total
+              repeatedly for fast backroom adds; close to commit all entries.
+            </li>
+            <li>
+              <strong>Delete Location…</strong>: Delete entire location, only a
+              specific upload in the location, or just one employee’s portion.
+            </li>
+          </ul>
+          <h4>Zero-total locator</h4>
+          <p>
+            If a location shows $0 and you’re unsure where its counts went:
+            click the location number. Because total is zero, UES opens a helper
+            that lets you pick who counted it, shows all their locations with
+            totals (including merged cases), and suggests
+            <em>five likely matches</em> based on proximity. Double-click a
+            candidate, verify in Details, then
+            <strong>Update Location</strong> to move the data.
+          </p>
+        </section>
+
+        <section id="details">
+          <h3>Details window</h3>
+          <p>
+            Details is similar to United’s final file view. By default it’s
+            read-only; click <em>Unlock</em> to enable edits for supported
+            fields.
+          </p>
+          <div class="grid cols-2">
+            <div>
+              <h4>Search & filter</h4>
+              <ul>
+                <li>
+                  Global search across category, price point, SKU, or
+                  description.
+                </li>
+                <li>
+                  Right-click a cell to filter to that value (e.g., show all for
+                  a SKU).
+                </li>
+              </ul>
+              <h4>Editing</h4>
+              <ul>
+                <li>
+                  Edit <em>location</em> and <em>category</em> on a single
+                  record.
+                </li>
+                <li>
+                  Drag to multi-select rows, then
+                  <strong>Quick Change…</strong> to update all (or
+                  <strong>Delete</strong>).
+                </li>
+                <li>
+                  <strong>Add Record</strong> creates a blank line (file name =
+                  <code>Edit Suite</code>).
+                </li>
+                <li>
+                  When you edit a SKU, UES validates against the
+                  <em>live customer master</em>; price/description (and hidden
+                  fields like cost) update automatically.
+                </li>
+              </ul>
+            </div>
+            <div>
+             
+              <h4>MassEdit</h4>
+              <ul>
+                <li>
+                  Select a <em>beginning record</em> then click
+                  <strong>MassEdit</strong>. Fields auto-populate.
+                </li>
+                <li>
+                  Clear a field to apply to <em>all</em> (no need to type
+                  “ALL”).
+                </li>
+                <li>
+                  Leaving <em>end record</em> blank extends to the last record
+                  UES finds within the parameters (e.g., last record for upload
+                  13 in area 40041, location 04-010).
+                </li>
+                <li>
+                  Use <strong>Save Changes</strong>; if you try to exit with
+                  unsaved edits, UES prompts you to save.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p>
+            <em>View Details</em> from Reports shows only the selected location.
+            <em>View Details (All)</em> shows details across all currently
+            viewed areas. In <a href="#scan">Scan Reports</a>,
+            <em>View Details (Final File)</em> opens the entire final file.
+          </p>
+        </section>
+
+        <section id="scan">
+          <h3>Scan Reports (Pieces/Units)</h3>
+          <p>
+            Identical functionality to Reports, but the layout is optimized for
+            <strong>pieces/units</strong> style rather than financial
+            three-variance format.
+          </p>
+        </section>
+
+        <section id="uploads">
+          <h3>All Uploads</h3>
+          <ul>
+            <li>
+              WinTakes-like view of every upload: who counted it, dollar and
+              unit totals. Values reflect the <em>final file</em> (i.e., after
+              adjustments).
+            </li>
+            <li><strong>Delete Upload</strong> to remove a selected upload.</li>
+            <li>
+              <strong>View Locations</strong> within an upload, or open Details
+              filtered to just that upload.
+            </li>
+          </ul>
+        </section>
+
+        <section id="audits">
+          <h3>Audits (Desktop & Tablet)</h3>
+          <div class="callout">
+            Audits support sorting on all fields, show grand totals, and capture
+            full change history.
+          </div>
+          <h4>Preparing & printing</h4>
+          <ul>
+            <li>
+              Search by <em>name</em>, <em>area</em>, or <em>location</em>.
+              Toggle options (e.g., hide employee names on printed audits).
+            </li>
+            <li>
+              Select audits → <strong>Print Audits</strong> to generate PDFs.
+              UES remembers what’s been printed even after closing. Reprint
+              specific audits by using <strong>Re-Enable</strong>.
+            </li>
+            <li>
+              <strong>Export Audits</strong> mirrors printing: exports only the
+              enabled set.
+            </li>
+          </ul>
+          <h4>Tablet workflow (same network)</h4>
+          <ol>
+            <li>
+              Click <strong>Get Address</strong> to obtain the device URL (IP +
+              port) and open it on a tablet.
+            </li>
+            <li>
+              On tablet, view audits <em>by Name</em> or <em>by Location</em>.
+              Review includes: add record, mark for deletion, change SKU
+              (invalid SKUs highlight red), edit quantity; for financial
+              inventories, price and category can be edited too.
+            </li>
+            <li>
+              When a location is finished, mark it <strong>Complete</strong>.
+              Completed names/locations disable or disappear accordingly.
+            </li>
+          </ol>
+          <h4>Importing & resolving audits</h4>
+          <ol>
+            <li>
+              On desktop, click <strong>Import Audits</strong> to pull tablet
+              changes.
+            </li>
+            <li>
+              Review the feed: added records (SKU/price + units), deletions, SKU
+              changes (before/after, including price changes), unit changes, and
+              not-found SKUs.
+            </li>
+            <li>
+              Use <strong>Accept All</strong>,
+              <strong>Reject</strong> individual items, or leave some pending to
+              revisit later. Pending items remain visible until resolved.
+            </li>
+          </ol>
+          <h4>Daily backups of audits (PDF + logs)</h4>
+          <ul>
+            <li>
+              Use <strong>Back Up Exports</strong> at day’s end to select a
+              folder. UES creates an <code>/audits</code> subfolder with a PDF
+              per location (green = accepted, red = rejected, no color =
+              unchanged).
+            </li>
+            <li>
+              Each import produces a text log capturing what changed, when the
+              import occurred, and delta amounts per record.
+            </li>
+          </ul>
+          <div class="callout success">
+            Shortcuts: <span class="kbd">Accept All</span>,
+            <span class="kbd">Re-Enable</span> (to reprint), and
+            <span class="kbd">Enable All</span> (auto-create audits for each
+            import).
+          </div>
+        </section>
+
+        <section id="options">
+          <h3>Options & Automation</h3>
+          <ul>
+            <li>
+              <strong>Auto-update Areas</strong>: For each incoming location, if
+              its current area differs from the most recent prior’s area, UES
+              updates the current to match the prior (fixes forgotten area
+              changes).
+            </li>
+            <li>
+              <strong>Auto-fix increments of locations</strong>: If a location
+              ends with <code>1</code> or <code>6</code> and didn’t previously
+              exist, UES adjusts it to end with <code>0</code> or
+              <code>5</code>.
+            </li>
+            <li>
+              <strong>View Production</strong>: Displays current production
+              metrics for all employees.
+            </li>
+          </ul>
+        </section>
+
+        <section id="backups">
+          <h3>Backups & Restore</h3>
+          <ul>
+            <li>
+              <strong>Emergency Backups (United)</strong>: Every time you click
+              <em>Refresh</em> and UES detects a changed final file, it creates
+              a United backup in the designated folder.
+            </li>
+            <li>
+              <strong>Restore Customer Files</strong>: UES creates a folder when
+              a new customer is detected on open. If you accidentally switch
+              customers mid-inventory and lose printed reports/audits, restore
+              the previous store to continue.
+            </li>
+            <li>
+              <strong>MySQL Backups (MobTrans)</strong>: Lists historical MySQL
+              backups (not United backups). You can open versions to inspect,
+              then <strong>Import New MySQL</strong> and select the known-good
+              file to restore.
+            </li>
+          </ul>
+        </section>
+
+        <section id="troubleshooting">
+          <h3>Troubleshooting</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Symptom</th>
+                <th>Cause</th>
+                <th>Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Error banner after Refresh; can’t open Final File views</td>
+                <td>United has a File locked (too deep in menus)</td>
+                <td>
+                  Back out to a top-level menu (≤1 level deep) in United; then
+                  Refresh in UES
+                </td>
+              </tr>
+              <tr>
+                <td>Expected changes not visible</td>
+                <td>United data updated but UES not synced</td>
+                <td>Click <strong>Refresh</strong> in UES</td>
+              </tr>
+              <tr>
+                <td>Location shows $0 with priors</td>
+                <td>Counts moved/merged elsewhere</td>
+                <td>
+                  Click location number → use <em>Zero-total locator</em> to
+                  find & move
+                </td>
+              </tr>
+              <tr>
+                <td>Duplicate/odd location numbers (…1/…6)</td>
+                <td>Increment typo during counting</td>
+                <td>Enable <strong>Auto-fix increments</strong> in Options</td>
+              </tr>
+              <tr>
+                <td>Wrong area on a location</td>
+                <td>Counter forgot to change area</td>
+                <td>
+                  Enable <strong>Auto-update Areas</strong>; or Quick Edit/Move
+                  to correct
+                </td>
+              </tr>
+              <tr>
+                <td>Tablet shows red SKU</td>
+                <td>SKU not in customer master</td>
+                <td>
+                  Correct the SKU; UES validates live and updates price/desc
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="shortcuts">
+          <h3>Quick Reference</h3>
+          <div class="grid cols-2">
+            <div>
+              <h4>Core actions</h4>
+              <ul>
+                <li><strong>Refresh</strong> – sync UES with United changes</li>
+                <li>
+                  <strong>Quick Edit</strong> – bulk change/swap area/location
+                  IDs
+                </li>
+                <li>
+                  <strong>Category Change</strong> – move partial/total dollars
+                  across categories
+                </li>
+                <li>
+                  <strong>Manual Entry</strong> – rapid category/total input for
+                  a location
+                </li>
+                <li>
+                  <strong>Split</strong> – separate merged locations by exact
+                  record (SKU/price)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>When to use Details</h4>
+              <ul>
+                <li>Need multi-row edits with filters</li>
+                <li>Change location/category on many rows</li>
+                <li>Add/Delete records with live validation</li>
+                <li>MassEdit ranges by upload/area/location</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <footer>
+          <p>
+            © <span id="year"></span> United Edit Suite. This document reflects
+            the behavior demonstrated in the product walkthrough video
+            transcript provided by the author.
+          </p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      // ===== Light/Dark toggle =====
+      const themeBtn = document.getElementById("themeToggle");
+      themeBtn.addEventListener("click", () => {
+        const isLight =
+          document.documentElement.getAttribute("data-theme") === "light";
+        document.documentElement.setAttribute(
+          "data-theme",
+          isLight ? "dark" : "light"
+        );
+        localStorage.setItem("ues-theme", isLight ? "dark" : "light");
+      });
+      const saved = localStorage.getItem("ues-theme");
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+
+      // ===== Last updated & year =====
+      const d = new Date();
+      document.getElementById("lastUpdated").textContent =
+        d.toLocaleDateString();
+      document.getElementById("year").textContent = d.getFullYear();
+
+      // ===== Build TOC from sections =====
+      const toc = document.getElementById("toc");
+      const sections = [...document.querySelectorAll("main section")];
+      const makeLink = (el, small = false) => {
+        const a = document.createElement("a");
+        a.href = `#${el.id}`;
+        a.textContent = el.querySelector("h3")?.textContent || el.id;
+        if (small) a.classList.add("small");
+        return a;
+      };
+      const introLink = document.createElement("a");
+      introLink.href = "#overview";
+      introLink.textContent = "Overview";
+      toc.appendChild(introLink);
+      sections.forEach((s) => toc.appendChild(makeLink(s)));
+
+      // ===== Search (client-side filter) =====
+      const search = document.getElementById("search");
+      search.addEventListener("input", (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        sections.forEach((sec) => {
+          const text = sec.innerText.toLowerCase();
+          sec.style.display = q && !text.includes(q) ? "none" : "";
+        });
+      });
+      // Cmd/Ctrl+K focus
+      window.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          search.focus();
+        }
+      });
+
+      // ===== Expand/Collapse all =====
+      const expandAll = document.getElementById("expandAll");
+      const collapseAll = document.getElementById("collapseAll");
+      expandAll.addEventListener("click", () => {
+        sections.forEach((s) => (s.style.maxHeight = null));
+      });
+      collapseAll.addEventListener("click", () => {
+        sections.forEach((s) => (s.style.maxHeight = "38px"));
+      });
+      if (window.innerWidth < 900) {
+        sections.forEach((s) => (s.style.maxHeight = "38px"));
+      }
+
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const id = a.getAttribute("href").slice(1);
+          const el = document.getElementById(id);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
