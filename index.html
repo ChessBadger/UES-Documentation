@@ -369,6 +369,41 @@
             United (new uploads, items marked as printed). Refresh syncs those
             changes into UES.
           </p>
+          <div class="callout danger">
+            <strong>Mark-as-Printed behavior:</strong>
+            UES recognizes items <em>marked as printed in United</em>, but
+            <em>United does not recognize items marked as printed inside UES</em
+            >. To avoid confusion, pick one place to mark items as printed and
+            stay consistent.
+          </div>
+        </section>
+        <section id="worksheets">
+          <h3>Worksheets</h3>
+          <h4>Print Worksheets</h4>
+          <p>
+            Open <span class="kbd">Print Worksheets</span> on the right to
+            generate worksheet PDFs. You can choose to show
+            <strong>no categories</strong>, <strong>categories</strong>, or
+            <strong>category groups</strong>.
+          </p>
+
+          <h4>Highlights</h4>
+          <p>
+            Enable <span class="kbd">Highlights</span> to visually alternate
+            rows for locations with multiple categories so nothing is missed
+            during.
+          </p>
+
+          <h4>Threshold</h4>
+          <p>
+            Set a <strong>Threshold</strong> to limit highlighting to locations
+            with
+            <strong
+              >more than one category but no more than
+              <em>N</em> categories</strong
+            >. Example: Threshold = <code>4</code> highlights locations that
+            have no more than 4 categories.
+          </p>
         </section>
 
         <section id="selection">
@@ -423,9 +458,9 @@
               <em>Mark as Gone</em> prefixes “Gone ” to the name.
             </li>
             <li>
-              <strong>New Location…</strong>: Add a location with description/notes. This writes to United
-              Location Setup and seeds a prior of $0 so the location appears on
-              reports.
+              <strong>New Location…</strong>: Add a location with
+              description/notes. This writes to United Location Setup and seeds
+              a prior of $0 so the location appears on reports.
             </li>
             <li>
               <strong>Quick Edit…</strong>: Quickly change or swap area/location
@@ -437,6 +472,13 @@
               with data.
             </li>
           </ul>
+          <h4>Print Report (PDF totals)</h4>
+          <p>
+            Use <span class="kbd">Print Report</span> at the top to generate a
+            <strong>PDF of the totals</strong> shown in the current view. The
+            PDF mirrors what you see on screen and can be saved or printed.
+          </p>
+
           <h4>Visual indicators</h4>
           <ul>
             <li>
@@ -448,30 +490,30 @@
             <li class="pill">
               <span class="status-dot warn"></span> ⚠️ Location total is $0 but
               there were priors.
-            </li> <br
+            </li>
             <li class="pill">
               <span class="status-dot err"></span>
               <span style="color: var(--danger)">Red category rows</span> =
               previously counted here, but missing in current inventory.
             </li>
           </ul>
-           <h4>Split Window</h4>
-              <ol>
-                <li>
-                  Open <strong>Edit</strong> on a location, choose employee (if
-                  multiple).
-                </li>
-                <li>
-                  Pick the exact boundary record (by SKU or price point, e.g.,
-                  $4.49). UES previews remaining totals for current vs. new
-                  location/area.
-                </li>
-                <li>
-                  Use <strong>Search Record</strong> if multiple matches exist;
-                  choose field (price, SKU, etc.), then select the unique match
-                  to complete the split.
-                </li>
-              </ol>
+          <h4>Split Window</h4>
+          <ol>
+            <li>
+              Open <strong>Edit</strong> on a location, choose employee (if
+              multiple).
+            </li>
+            <li>
+              Pick the exact boundary record (by SKU or price point, e.g.,
+              $4.49). UES previews remaining totals for current vs. new
+              location/area.
+            </li>
+            <li>
+              Use <strong>Search Record</strong> if multiple matches exist;
+              choose field (price, SKU, etc.), then select the unique match to
+              complete the split.
+            </li>
+          </ol>
           <h4>Category change & manual entry (in-report edit)</h4>
           <ul>
             <li>
@@ -545,7 +587,6 @@
               </ul>
             </div>
             <div>
-             
               <h4>MassEdit</h4>
               <ul>
                 <li>
@@ -670,11 +711,28 @@
               import occurred, and delta amounts per record.
             </li>
           </ul>
+          <h4>Recovery Report (MODAS “Mayday”)</h4>
+          <p>
+            Use <span class="kbd">Recovery Report</span> to create an
+            <strong>audit per employee</strong> with the
+            <strong>10 most recent items</strong> from the final file. This
+            helps teams quickly resume work in a Mayday scenario.
+          </p>
+
           <div class="callout success">
-            Shortcuts: <span class="kbd">Accept All</span>,
-            <span class="kbd">Re-Enable</span> (to reprint), and
-            <span class="kbd">Enable All</span> (auto-create audits for each
-            import).
+            <h4>Enable / Disable / Re-Enable</h4>
+            <ul>
+              <li>
+                <strong>Enable All</strong>: Enable audits for all current rows
+                so they can be printed or exported.
+              </li>
+              <li><strong>Disable All</strong>: Clear all enables.</li>
+              <li>
+                <strong>Re-Enable All</strong>: Re-enable items that were
+                previously printed/exported and are currently enabled, for
+                reprint/re-export.
+              </li>
+            </ul>
           </div>
         </section>
 
@@ -698,7 +756,9 @@
               metrics for all employees.
             </li>
             <li>
-              <strong>View Prior Inventory</strong>: Allows the user to select the last inventory backup and view the final file of that inventory in the details window.
+              <strong>View Prior Inventory</strong>: Allows the user to select
+              the last inventory backup and view the final file of that
+              inventory in the details window.
             </li>
           </ul>
           <ul>
