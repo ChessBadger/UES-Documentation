@@ -478,6 +478,13 @@
             <strong>PDF of the totals</strong> shown in the current view. The
             PDF mirrors what you see on screen and can be saved or printed.
           </p>
+          <p>
+            When a location’s <strong>current description</strong> differs from
+            a known <em>prior description</em>, the report shows a red
+            <strong>**</strong> prefix before the current text, and (if space
+            allows) the prior description appears
+            <em>in red italics inside parentheses</em>.
+          </p>
 
           <h4>Visual indicators</h4>
           <ul>
@@ -761,6 +768,110 @@
               inventory in the details window.
             </li>
           </ul>
+          <hr />
+          <h3 id="build-datetime-field">🧱 Build Date/Time Field</h3>
+
+          <p>
+            <strong>Purpose:</strong><br />
+            The <em>Build Date/Time Field</em> option allows you to manually
+            populate the <code>other5</code> field with formatted date and time
+            values based on each record’s existing <code>date</code> and
+            <code>time</code> fields.
+          </p>
+
+          <h4>How It Works</h4>
+          <ol>
+            <li>Choose <strong>Options → Build Date/Time Field</strong>.</li>
+            <li>
+              Select a desired format in the
+              <strong>Date/Time Format</strong> dialog.
+            </li>
+            <li>
+              The system then updates <code>final.dbf</code>, filling
+              <code>other5</code> for each record using the chosen format (e.g.,
+              <code>mm/dd/yy hh:mm</code> → <code>10/10/25 14:45</code>).
+            </li>
+            <li>
+              If a record is missing either date or time, only the available
+              part is written; missing components are left blank.
+            </li>
+          </ol>
+
+          <h4>Notes</h4>
+          <ul>
+            <li>This process runs once per command; it is not automatic.</li>
+            <li>
+              Existing <code>other5</code> values are replaced during this
+              operation.
+            </li>
+            <li>
+              Execution is batched for efficiency — performance impact is
+              minimal even for large <code>final.dbf</code> files.
+            </li>
+          </ul>
+
+          <hr />
+          <h3 id="auto-apply-datetime">🕓 Auto Apply Date/Time</h3>
+
+          <p>
+            <strong>Purpose:</strong><br />
+            Enables automatic date/time stamping of new records as they are
+            added to
+            <code>final.dbf</code>, using the same formatting rules as
+            <em>Build Date/Time Field</em>.
+          </p>
+
+          <h4>How It Works</h4>
+          <ol>
+            <li>
+              Enable <strong>Options → Auto Apply Date/Time</strong> (checkable
+              menu item).
+            </li>
+            <li>
+              When enabled for the first time, the
+              <strong>Date/Time Format</strong> dialog appears so you can select
+              your preferred date/time layout.
+            </li>
+            <li>
+              On each refresh or incremental update:
+              <ul>
+                <li>
+                  Any record where <code>other5</code> is empty is filled with
+                  the current local date/time in the chosen format.
+                </li>
+                <li>
+                  Records that already contain a value in
+                  <code>other5</code> are skipped.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Disable at any time by unchecking
+              <strong>Auto Apply Date/Time</strong>.
+            </li>
+          </ol>
+
+          <h4>Example Output</h4>
+          <pre><code>10/10/25 14:45
+10/10/25 15:22
+10/10/25 16:08
+</code></pre>
+
+          <h4>Performance Notes</h4>
+          <ul>
+            <li>Only affects rows where <code>other5</code> is blank.</li>
+            <li>
+              Uses a single batch update rather than per-row writes, ensuring
+              fast execution even as <code>final.dbf</code> grows throughout the
+              day.
+            </li>
+          </ul>
+
+          <p>
+            Together, these two features allow either manual or automatic
+            control over how and when timestamps are applied to your data,
+            enabling both end-of-day and continuous processing workflows.
+          </p>
           <ul>
             <li>
               <strong>Emergency Backups (United)</strong>: Every time you click
