@@ -296,6 +296,33 @@
       .status-dot.err {
         background: var(--danger);
       }
+      .changelog-item {
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        border-radius: 12px;
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .changelog-meta {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
+      }
+
+      .changelog-title {
+        font-weight: 600;
+      }
+
+      .changelog-badge-new {
+        background: var(--accent-2);
+        color: #fff;
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-size: 12px;
+      }
 
       @media (max-width: 1000px) {
         .app {
@@ -339,6 +366,9 @@
             </div>
           </div>
           <div class="toolbar">
+            <button class="btn" id="whatsNewBtn" title="Show latest changes">
+              ✨ What's New
+            </button>
             <button class="btn" id="themeToggle" title="Toggle light/dark">
               🌓 Theme
             </button>
@@ -377,6 +407,15 @@
             stay consistent.
           </div>
         </section>
+        <section id="Cards">
+          <h3>Create Cards</h3>
+          <p>
+            Open <span class="kbd">Create Cards</span> on the right and choose
+            your customer under <span class="kbd">DC Setup</span> to create DC5
+            cards for the current inventory.
+          </p>
+        </section>
+
         <section id="worksheets">
           <h3>Worksheets</h3>
           <h4>Print Worksheets</h4>
@@ -405,7 +444,29 @@
             have no more than 4 categories.
           </p>
         </section>
-
+        <section id="Cost">
+          <h3>Category Cost Report</h3>
+          <ul>
+            <li>
+              When all areas marked as printed are selected in the main window
+              the
+              <span class="kbd">Print Cost Report</span> button will appear.
+            </li>
+            <li>
+              This will generate a category report displaying the retail, cost,
+              variance, and percentage chosen based on the values in United.
+            </li>
+            <li>
+              This works by taking the category totals in and creating a
+              negative financail entry in the final file to adjust the total to
+              it's cost value.
+            </li>
+            <li>
+              All adjustments will have a file name of
+              <span class="kbd">COST_ADJ</span> in the final file.
+            </li>
+          </ul>
+        </section>
         <section id="selection">
           <h3>Selecting Areas</h3>
           <ul>
@@ -426,6 +487,23 @@
             The <strong>View Reports</strong> window mirrors United’s printed
             report style and supports in-place editing with helpful tooltips.
           </p>
+          <h4>Cost Totals</h4>
+          <ul>
+            <li>
+              If percentages are given in United, you will see a banner at the
+              top of the report window telling you that you are viewing cost
+              adjust totals.
+            </li>
+            <li>
+              All totals are adjusted in the final file with negative entries
+              upon opening the report window based on the current retail total
+              of the location and the value in United.
+            </li>
+            <li>
+              All adjustments will have a file name of
+              <span class="kbd">COST_ADJ</span> in the final file.
+            </li>
+          </ul>
           <h4>Visibility controls</h4>
           <ul>
             <li>
@@ -649,6 +727,10 @@
             <li>
               <strong>Add employee number</strong> Right click to assign or
               change an employee for an upload.
+            </li>
+            <li>
+              <strong>Right click</strong> any upload to add or change the
+              employee number in of that upload
             </li>
           </ul>
         </section>
@@ -989,6 +1071,15 @@
             </div>
           </div>
         </section>
+        <section id="changelog">
+          <h3>What's New</h3>
+          <p>
+            Stay up to date with the latest changes in United Edit Suite. The
+            newest release is always shown first.
+          </p>
+          <div id="changelogList" class="grid"></div>
+        </section>
+
         <footer>
           <p>
             © <span id="year"></span> United Edit Suite. This document reflects
@@ -1000,6 +1091,35 @@
     </div>
 
     <script>
+      // ===== Release / Changelog data =====
+      const UES_RELEASES = [
+        {
+          version: "3.4.8",
+          date: "2025-12-01",
+          title: "Auto Date/Time & Recovery Improvements",
+          highlights: [
+            "Allow user to create cards from the Main Window",
+            "Allow user to add or edit employee numbers from the Uploads Window.",
+            "Details Window now displays ext qty rather than units and qty2",
+            "Features to convert retail to cost inventory for c-stores and pharmacies.",
+            "Display grand totals for all areas when generating pdf reports.",
+          ],
+        },
+        {
+          version: "3.4.7",
+          date: "2025-11-15",
+          title: "Build Date/Time Field & UI Enhancements",
+          highlights: [
+            "New 'Build Date/Time Field' option to populate export with formatted date/time.",
+            "Added 'Auto Apply Date/Time' feature for automatic timestamping of new records.",
+            "Fixed minor bugs in the Reports window related to category grouping.",
+          ],
+        },
+      ];
+
+      const CURRENT_VERSION = UES_RELEASES[0].version;
+      const LAST_SEEN_KEY = "ues-last-seen-version";
+
       // ===== Light/Dark toggle =====
       const themeBtn = document.getElementById("themeToggle");
       themeBtn.addEventListener("click", () => {
@@ -1055,15 +1175,6 @@
         }
       });
 
-      // ===== Expand/Collapse all =====
-      const expandAll = document.getElementById("expandAll");
-      const collapseAll = document.getElementById("collapseAll");
-      expandAll.addEventListener("click", () => {
-        sections.forEach((s) => (s.style.maxHeight = null));
-      });
-      collapseAll.addEventListener("click", () => {
-        sections.forEach((s) => (s.style.maxHeight = "38px"));
-      });
       if (window.innerWidth < 900) {
         sections.forEach((s) => (s.style.maxHeight = "38px"));
       }
@@ -1079,6 +1190,76 @@
           }
         });
       });
+
+      // ===== Render changelog =====
+      const changelogList = document.getElementById("changelogList");
+      if (changelogList) {
+        UES_RELEASES.forEach((release, index) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "changelog-item";
+
+          const meta = document.createElement("div");
+          meta.className = "changelog-meta";
+
+          const title = document.createElement("span");
+          title.className = "changelog-title";
+          title.textContent = `v${release.version} – ${release.title}`;
+
+          const date = document.createElement("span");
+          date.className = "badge";
+          date.style.marginLeft = "4px";
+          date.textContent = new Date(release.date).toLocaleDateString();
+
+          meta.appendChild(title);
+          meta.appendChild(date);
+
+          // Show "NEW" badge only for the latest entry
+          if (index === 0) {
+            const newBadge = document.createElement("span");
+            newBadge.className = "changelog-badge-new";
+            newBadge.textContent = "NEW";
+            meta.appendChild(newBadge);
+          }
+
+          const ul = document.createElement("ul");
+          release.highlights.forEach((text) => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            ul.appendChild(li);
+          });
+
+          wrapper.appendChild(meta);
+          wrapper.appendChild(ul);
+          changelogList.appendChild(wrapper);
+        });
+      }
+
+      // ===== "What's New" button behavior =====
+      const whatsNewBtn = document.getElementById("whatsNewBtn");
+      if (whatsNewBtn) {
+        const lastSeen = localStorage.getItem(LAST_SEEN_KEY);
+        const hasUnseen = lastSeen !== CURRENT_VERSION;
+
+        // Tiny visual cue if there are unseen changes
+        if (hasUnseen) {
+          const dot = document.createElement("span");
+          dot.className = "status-dot ok";
+          dot.style.marginLeft = "6px";
+          whatsNewBtn.appendChild(dot);
+        }
+
+        whatsNewBtn.addEventListener("click", () => {
+          const section = document.getElementById("changelog");
+          if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+            // Mark current version as seen
+            localStorage.setItem(LAST_SEEN_KEY, CURRENT_VERSION);
+            // Remove the dot if present
+            const dot = whatsNewBtn.querySelector(".status-dot");
+            if (dot) dot.remove();
+          }
+        });
+      }
     </script>
   </body>
 </html>
