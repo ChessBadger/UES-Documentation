@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
@@ -50,8 +50,14 @@
       }
       body {
         margin: 0;
-        font: 400 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI,
-          Roboto, Helvetica, Arial;
+        font:
+          400 16px/1.6 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial;
         background: var(--bg);
         color: var(--text);
       }
@@ -260,8 +266,8 @@
 
       /* Utilities */
       .kbd {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          monospace;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         font-size: 12px;
         background: var(--surface-2);
         border: 1px solid var(--border);
@@ -759,8 +765,8 @@
           <h4>Tablet workflow (same network)</h4>
           <ol>
             <li>
-              Click <strong>Get Address</strong> to obtain the device URL (IP +
-              port) and open it on a tablet.
+              Click <strong>Get Address</strong> Will provide a QR code that can
+              be scanned via the camera app on the tablet.
             </li>
             <li>
               On tablet, view audits <em>by Name</em> or <em>by Location</em>.
@@ -1093,6 +1099,25 @@
       // ===== Release / Changelog data =====
       const UES_RELEASES = [
         {
+          version: "3.5.4",
+          date: "2026-02-16",
+          title: "UI updates and Manager Reports Demo",
+          highlights: [
+            "Display scannable QR code for tablet connection info in Audits window and Report Windows",
+            "Worksheet: Include inv date in header and strikethrough locations marked as '-gone'",
+            "Update window sizing for all pdf preview windows to better fit content on screen",
+            "Manager Reports: Initial demo.",
+          ],
+        },
+        {
+          version: "3.5.3",
+          date: "2026-01-21",
+          title: "Hotfix: PDF Windows",
+          highlights: [
+            "Fix for PDF generation in Reports and Scan Reports windows to resolve Windows 11 udpate changes.",
+          ],
+        },
+        {
           version: "3.5.2",
           date: "2026-01-05",
           title: "Cards bug fixes & report enhancements",
@@ -1149,7 +1174,7 @@
           document.documentElement.getAttribute("data-theme") === "light";
         document.documentElement.setAttribute(
           "data-theme",
-          isLight ? "dark" : "light"
+          isLight ? "dark" : "light",
         );
         localStorage.setItem("ues-theme", isLight ? "dark" : "light");
       });
