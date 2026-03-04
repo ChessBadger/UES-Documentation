@@ -479,6 +479,10 @@
               <strong>View Reports</strong> (financial-style) or
               <strong>View Scan Reports</strong> (pieces/units style).
             </li>
+            <li>
+              <strong>View Recounts: </strong> displays all areas that contain
+              locations marked for recount, if recount has not been completed.
+            </li>
           </ul>
         </section>
 
@@ -554,6 +558,13 @@
               <em>category number</em> to move it. If grouped, pick a category
               with data.
             </li>
+            <p>
+              When a location’s <strong>current description</strong> differs
+              from a known <em>prior description</em>, the report shows a red
+              <strong>**</strong> prefix before the current text, and (if space
+              allows) the prior description appears
+              <em>in red italics inside parentheses</em>.
+            </p>
           </ul>
           <h4>Print Report (PDF totals)</h4>
           <p>
@@ -561,13 +572,17 @@
             <strong>PDF of the totals</strong> shown in the current view. The
             PDF mirrors what you see on screen and can be saved or printed.
           </p>
-          <p>
-            When a location’s <strong>current description</strong> differs from
-            a known <em>prior description</em>, the report shows a red
-            <strong>**</strong> prefix before the current text, and (if space
-            allows) the prior description appears
-            <em>in red italics inside parentheses</em>.
-          </p>
+          <h4>Export to Manager Reports</h4>
+          <ul>
+            <li>
+              <strong>Export Grouped</strong> writes the currently displayed
+              areas as one shared export group.
+            </li>
+            <li>
+              <strong>Export Separate</strong> writes the same visible areas as
+              separate exports with no shared grouping.
+            </li>
+          </ul>
 
           <h4>Visual indicators</h4>
           <ul>
@@ -585,6 +600,21 @@
               <span class="status-dot err"></span>
               <span style="color: var(--danger)">Red category rows</span> =
               previously counted here, but missing in current inventory.
+            </li>
+          </ul>
+          <h4>Recount indicators</h4>
+          <ul>
+            <li>
+              Locations already marked for recount are shaded and labeled
+              <strong>RECOUNT</strong> in the report window.
+            </li>
+            <li>
+              Recount state is preserved in the Manager Reports export so
+              supervisors can continue tracking active recounts.
+            </li>
+            <li>
+              To clear te recount state, re-export the area. If no change has
+              been made, that will be logged for the mamanger automatically.
             </li>
           </ul>
           <h4>Split Window</h4>
@@ -631,6 +661,87 @@
             <em>five likely matches</em> based on proximity. Double-click a
             candidate, verify in Details, then
             <strong>Update Location</strong> to move the data.
+          </p>
+        </section>
+        <section id="scan">
+          <h3>Scan Reports (Pieces/Units)</h3>
+          <p>
+            Identical functionality to Reports, but the layout is optimized for
+            <strong>pieces/units</strong> style rather than financial
+            three-variance format.
+          </p>
+        </section>
+        <section id="manager-reports">
+          <h3>Manager Reports Window</h3>
+          <p>
+            Open <strong>Manager Reports</strong> from the main window to review
+            the JSON report exports in one place. It is the supervisor view for
+            area review status, active recounts, field questions, chat, and
+            tablet connection status.
+          </p>
+          <h4>Top controls</h4>
+          <ul>
+            <li>
+              <strong>Refresh</strong> reloads the exported report files and
+              updates the summary cards.
+            </li>
+            <li>
+              <strong>Backup</strong> creates a zip backup that includes Audits
+              plus the current Manager Reports export files.
+            </li>
+            <li>
+              <strong>Chat Log</strong> opens the shared chat history and clears
+              the unread chat badge after viewing.
+            </li>
+            <li>
+              The <strong>Tablet</strong> status card shows whether the tablet
+              is connected to the network or not.
+            </li>
+          </ul>
+          <h4>Areas tab</h4>
+          <ul>
+            <li>
+              Shows one row per area with area number, description, review
+              status, review time, recount count, and question count.
+            </li>
+            <li>
+              Use <strong>Search</strong> and the <strong>Status</strong> filter
+              to narrow the list to reviewed areas, items still to review, or
+              areas with recount/question activity.
+            </li>
+            <li>
+              Selecting an area updates the details panel with location count,
+              area totals, and rolled-up category totals.
+            </li>
+            <li>
+              Right-click an area and choose <strong>Remove Area</strong> to
+              clear that export from the Manager Reports view.
+            </li>
+          </ul>
+          <h4>Recounts and Questions</h4>
+          <ul>
+            <li>
+              The <strong>Recounts</strong> tab lists active recount requests by
+              area and location, including the reason and timestamp.
+            </li>
+            <li>
+              The <strong>Questions</strong> tab lists field questions and any
+              reply already saved.
+            </li>
+            <li>
+              Selecting a recount or question updates the details panel with
+              that location's current/prior totals and category breakdown.
+            </li>
+            <li>
+              When a question is selected, use the reply editor to save a
+              response back into the report file.
+            </li>
+          </ul>
+          <h4>Unread indicators</h4>
+          <p>
+            Red notification badges mark new recounts, questions, or chat
+            messages that have not been viewed yet. The main window mirrors this
+            unread state on the <strong>Manager Reports</strong> button.
           </p>
         </section>
 
@@ -704,15 +815,6 @@
             <em>View Details (All)</em> shows details across all currently
             viewed areas. In <a href="#scan">Scan Reports</a>,
             <em>View Details (Final File)</em> opens the entire final file.
-          </p>
-        </section>
-
-        <section id="scan">
-          <h3>Scan Reports (Pieces/Units)</h3>
-          <p>
-            Identical functionality to Reports, but the layout is optimized for
-            <strong>pieces/units</strong> style rather than financial
-            three-variance format.
           </p>
         </section>
 
@@ -1098,6 +1200,17 @@
     <script>
       // ===== Release / Changelog data =====
       const UES_RELEASES = [
+        {
+          version: "4.0.0",
+          date: "2026-03-05",
+          title: "Manager Reports & Optimizations",
+          highlights: [
+            "Manager Reprrts ready for production release",
+            "Efficiency optimizations for main window and report windows.",
+            "Audit/Manager Report backup verification before closing application.",
+            "Strikethrough for gone locations in worksheets.",
+          ],
+        },
         {
           version: "3.5.4",
           date: "2026-02-16",
