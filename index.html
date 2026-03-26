@@ -11,35 +11,41 @@
     <style>
       /* ===== Theme ===== */
       :root {
-        --bg: #0b0e12;
-        --surface: #11151b;
-        --surface-2: #0f1318;
-        --text: #e8ecf1;
-        --muted: #9aa3b2;
-        --accent: #6aa8ff;
-        --accent-2: #2dd4bf;
-        --border: #1e2530;
-        --link: #8ec9ff;
-        --code: #e7e9ee;
-        --code-bg: #0c1117;
+        --bg: #081018;
+        --surface: #0f1822;
+        --surface-2: #152131;
+        --surface-3: #1a2940;
+        --text: #edf3fb;
+        --muted: #9fafc3;
+        --accent: #7cb6ff;
+        --accent-2: #3ed1b1;
+        --accent-soft: rgba(124, 182, 255, 0.16);
+        --border: #24354c;
+        --link: #9bd2ff;
+        --code: #eef4fb;
+        --code-bg: #0b131d;
         --danger: #ff6b6b;
         --warn: #f7b955;
         --success: #39d98a;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        --stripe: rgba(124, 182, 255, 0.04);
+        --shadow: 0 24px 60px rgba(2, 8, 20, 0.42);
       }
       [data-theme="light"] {
-        --bg: #f7f9fc;
+        --bg: #eef4fb;
         --surface: #ffffff;
-        --surface-2: #f1f5f9;
-        --text: #0b1220;
-        --muted: #52607a;
-        --accent: #0d6efd;
-        --accent-2: #0ead9a;
-        --border: #e2e8f0;
+        --surface-2: #f5f9fd;
+        --surface-3: #e8f1fb;
+        --text: #102033;
+        --muted: #5a6980;
+        --accent: #1368d6;
+        --accent-2: #0f9d87;
+        --accent-soft: rgba(19, 104, 214, 0.1);
+        --border: #d7e2ef;
         --link: #0b6bff;
-        --code: #0b1220;
-        --code-bg: #eef2f7;
-        --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+        --code: #102033;
+        --code-bg: #edf3f9;
+        --stripe: rgba(19, 104, 214, 0.05);
+        --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
       }
       * {
         box-sizing: border-box;
@@ -52,14 +58,46 @@
         margin: 0;
         font:
           400 16px/1.6 ui-sans-serif,
+          "Aptos",
+          "Segoe UI Variable Text",
+          "Trebuchet MS",
           system-ui,
           -apple-system,
           Segoe UI,
           Roboto,
           Helvetica,
           Arial;
-        background: var(--bg);
+        background:
+          radial-gradient(circle at top left, rgba(124, 182, 255, 0.16), transparent 30%),
+          radial-gradient(circle at top right, rgba(62, 209, 177, 0.12), transparent 28%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 22%),
+          var(--bg);
         color: var(--text);
+        position: relative;
+        isolation: isolate;
+      }
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        border-radius: 999px;
+        filter: blur(12px);
+        pointer-events: none;
+        z-index: -1;
+      }
+      body::before {
+        width: 320px;
+        height: 320px;
+        top: -110px;
+        left: -90px;
+        background: rgba(124, 182, 255, 0.18);
+      }
+      body::after {
+        width: 380px;
+        height: 380px;
+        right: -140px;
+        bottom: 10%;
+        background: rgba(62, 209, 177, 0.14);
       }
       a {
         color: var(--link);
@@ -75,6 +113,7 @@
         grid-template-columns: 300px 1fr;
         gap: 0;
         min-height: 100vh;
+        position: relative;
       }
       nav {
         position: sticky;
@@ -82,12 +121,20 @@
         align-self: start;
         height: 100vh;
         overflow: auto;
-        background: var(--surface);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18%),
+          var(--surface);
         border-right: 1px solid var(--border);
+        box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.03);
       }
       main {
-        padding: 32px 40px;
+        padding: 28px clamp(20px, 3vw, 42px) 56px;
         overflow: hidden;
+      }
+      main > * {
+        max-width: 1160px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       /* Sidebar */
@@ -95,59 +142,145 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 18px 18px 10px;
+        padding: 22px 20px 14px;
         border-bottom: 1px solid var(--border);
       }
       .logo {
-        width: 28px;
-        height: 28px;
-        border-radius: 8px;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
         background: linear-gradient(135deg, var(--accent), var(--accent-2));
         box-shadow: var(--shadow);
+        position: relative;
+      }
+      .logo::after {
+        content: "";
+        position: absolute;
+        inset: 7px;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        border-radius: 8px;
       }
       .brand h1 {
-        font-size: 16px;
+        font-family:
+          "Aptos Display",
+          "Segoe UI Variable Display",
+          "Trebuchet MS",
+          sans-serif;
+        font-size: 17px;
         margin: 0;
+        letter-spacing: 0.01em;
       }
       .search {
-        padding: 12px 16px;
+        padding: 16px 16px 10px;
       }
       .search input {
         width: 100%;
-        padding: 10px 12px;
+        padding: 12px 14px;
         border: 1px solid var(--border);
         background: var(--surface-2);
         color: var(--text);
-        border-radius: 10px;
+        border-radius: 14px;
         outline: none;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+      }
+      .search input:focus {
+        border-color: var(--accent);
+        box-shadow:
+          0 0 0 4px var(--accent-soft),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        transform: translateY(-1px);
       }
       .toc {
-        padding: 4px 8px 24px;
+        padding: 4px 12px 28px;
+        display: grid;
+        gap: 4px;
       }
       .toc a {
         display: block;
-        padding: 8px 12px;
-        border-radius: 8px;
+        padding: 10px 12px;
+        border-radius: 12px;
         color: var(--text);
+        border: 1px solid transparent;
+        transition:
+          background 0.2s ease,
+          border-color 0.2s ease,
+          transform 0.2s ease,
+          color 0.2s ease;
       }
       .toc a.small {
         padding-left: 24px;
         color: var(--muted);
+        font-size: 14px;
       }
       .toc a:hover {
         background: var(--surface-2);
+        border-color: var(--border);
+        transform: translateX(4px);
       }
 
       /* Content */
       .page-title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: start;
+        padding: 30px;
+        margin-bottom: 22px;
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        background:
+          radial-gradient(circle at top right, rgba(124, 182, 255, 0.18), transparent 35%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 55%),
+          linear-gradient(180deg, var(--surface), var(--surface-2));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+      .page-title::after {
+        content: "";
+        position: absolute;
+        width: 240px;
+        height: 240px;
+        right: -60px;
+        top: -110px;
+        border-radius: 999px;
+        background: rgba(62, 209, 177, 0.12);
+        filter: blur(6px);
+        pointer-events: none;
+      }
+      .page-kicker {
+        margin: 0 0 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--accent-2);
+      }
+      .page-intro {
+        position: relative;
+        z-index: 1;
       }
       .page-title h2 {
-        font-size: 28px;
-        margin: 0 0 8px;
+        font-family:
+          "Aptos Display",
+          "Segoe UI Variable Display",
+          "Trebuchet MS",
+          sans-serif;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+        margin: 0 0 12px;
+        letter-spacing: -0.03em;
+        max-width: 14ch;
+      }
+      .page-subtitle {
+        margin: 0 0 18px;
+        max-width: 62ch;
+        color: var(--muted);
+        font-size: 17px;
       }
       .badges {
         display: flex;
@@ -158,85 +291,240 @@
         border: 1px solid var(--border);
         background: var(--surface-2);
         color: var(--muted);
-        padding: 4px 8px;
+        padding: 6px 10px;
         border-radius: 999px;
         font-size: 12px;
       }
+      .page-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .stat-card {
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+      }
+      .stat-label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      .stat-card strong {
+        display: block;
+        font-size: 16px;
+        line-height: 1.35;
+      }
       .toolbar {
-        display: flex;
+        display: grid;
         gap: 10px;
+        justify-items: stretch;
+        min-width: 180px;
+        position: relative;
+        z-index: 1;
       }
       .btn {
         border: 1px solid var(--border);
-        background: var(--surface);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+          var(--surface);
         color: var(--text);
-        padding: 8px 12px;
-        border-radius: 10px;
+        padding: 10px 14px;
+        border-radius: 14px;
         cursor: pointer;
+        font-weight: 600;
+        box-shadow: 0 10px 20px rgba(2, 8, 20, 0.08);
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
       }
       .btn:hover {
         background: var(--surface-2);
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+      .btn.primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        border-color: transparent;
+        color: #fff;
+      }
+      .btn.primary:hover {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 12px 26px rgba(19, 104, 214, 0.24);
+      }
+      .quick-links {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+      .quick-link-card {
+        display: block;
+        padding: 18px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+          var(--surface);
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .quick-link-card:hover {
+        text-decoration: none;
+        transform: translateY(-3px);
+        border-color: var(--accent);
+        box-shadow: 0 26px 52px rgba(2, 8, 20, 0.16);
+      }
+      .quick-link-label {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .quick-link-card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--text);
+        font-size: 18px;
+      }
+      .quick-link-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
       }
 
       section {
-        padding: 18px 0 8px;
-        border-bottom: 1px solid var(--border);
+        padding: 24px 26px 18px;
+        margin-bottom: 18px;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+          linear-gradient(180deg, var(--surface), var(--surface-2));
+        box-shadow: var(--shadow);
+        scroll-margin-top: 22px;
       }
       section:last-of-type {
-        border-bottom: none;
+        margin-bottom: 0;
       }
       h3 {
-        margin: 0 0 8px;
-        font-size: 22px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 0 10px;
+        font-family:
+          "Aptos Display",
+          "Segoe UI Variable Display",
+          "Trebuchet MS",
+          sans-serif;
+        font-size: 24px;
+        letter-spacing: -0.02em;
+      }
+      h3::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: linear-gradient(90deg, var(--border), transparent);
       }
       h4 {
-        margin: 18px 0 6px;
+        margin: 22px 0 8px;
         font-size: 18px;
       }
       p {
         margin: 8px 0;
       }
       ul {
-        margin: 8px 0 8px 20px;
+        margin: 10px 0 10px 20px;
+      }
+      li + li {
+        margin-top: 6px;
       }
       .callout {
         border: 1px solid var(--border);
-        background: var(--surface-2);
-        border-radius: 12px;
-        padding: 12px 14px;
-        margin: 10px 0;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+          var(--surface-2);
+        border-radius: 18px;
+        padding: 14px 16px 14px 18px;
+        margin: 14px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .callout::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 4px;
+        background: var(--accent);
       }
       .callout.warn {
         border-color: #b98518;
         background: linear-gradient(0deg, rgba(183, 138, 29, 0.1), transparent);
       }
+      .callout.warn::before {
+        background: var(--warn);
+      }
       .callout.danger {
         border-color: #7a2020;
         background: linear-gradient(0deg, rgba(162, 42, 42, 0.14), transparent);
+      }
+      .callout.danger::before {
+        background: var(--danger);
       }
       .callout.success {
         border-color: #1e7f4d;
         background: linear-gradient(0deg, rgba(16, 185, 129, 0.1), transparent);
       }
+      .callout.success::before {
+        background: var(--success);
+      }
 
       /* Tables */
       table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 18px;
         overflow: hidden;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
       }
       th,
       td {
-        padding: 10px 12px;
+        padding: 12px 14px;
         border-bottom: 1px solid var(--border);
         text-align: left;
+        vertical-align: top;
       }
       thead th {
-        background: var(--surface-2);
+        background: var(--surface-3);
         font-weight: 600;
+      }
+      tbody tr:nth-child(even) {
+        background: var(--stripe);
+      }
+      tbody tr:hover {
+        background: var(--surface-2);
       }
 
       /* Code-ish */
@@ -250,8 +538,8 @@
       pre {
         background: var(--code-bg);
         color: var(--code);
-        padding: 14px;
-        border-radius: 12px;
+        padding: 16px 18px;
+        border-radius: 16px;
         overflow: auto;
         border: 1px solid var(--border);
       }
@@ -259,9 +547,15 @@
       /* Footer */
       footer {
         margin-top: 24px;
-        padding-top: 16px;
+        padding: 18px 4px 0;
         border-top: 1px solid var(--border);
         color: var(--muted);
+      }
+      hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border), transparent);
+        margin: 28px 0;
       }
 
       /* Utilities */
@@ -304,9 +598,11 @@
       }
       .changelog-item {
         border: 1px solid var(--border);
-        background: var(--surface-2);
-        border-radius: 12px;
-        padding: 12px 14px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+          var(--surface-2);
+        border-radius: 18px;
+        padding: 16px 18px;
         box-shadow: var(--shadow);
       }
 
@@ -344,8 +640,8 @@
       .changelog-group {
         border: 1px solid var(--border);
         background: var(--surface);
-        border-radius: 10px;
-        padding: 10px 12px;
+        border-radius: 14px;
+        padding: 12px 14px;
       }
 
       .changelog-group-title {
@@ -363,6 +659,40 @@
         nav {
           position: relative;
           height: auto;
+        }
+        .page-title {
+          grid-template-columns: 1fr;
+          padding: 24px;
+        }
+        .toolbar {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .quick-links {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .page-stats {
+          grid-template-columns: 1fr;
+        }
+        .grid.cols-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 700px) {
+        main {
+          padding: 18px 14px 40px;
+        }
+        .toolbar {
+          grid-template-columns: 1fr;
+        }
+        .quick-links {
+          grid-template-columns: 1fr;
+        }
+        section {
+          padding: 20px 18px 14px;
+          border-radius: 20px;
+        }
+        .toc {
+          padding: 4px 10px 18px;
         }
       }
     </style>
@@ -387,8 +717,14 @@
 
       <main>
         <div class="page-title">
-          <div>
-            <h2 id="overview">Documentation</h2>
+          <div class="page-intro">
+            <p class="page-kicker">Field Operations Guide</p>
+            <h2 id="overview">United Edit Suite Documentation</h2>
+            <p class="page-subtitle">
+              Searchable guidance for reports, audits, manager workflows,
+              recovery, and day-of-inventory troubleshooting across desktop and
+              tablet use.
+            </p>
             <div class="badges">
               <span class="badge"
                 >Last updated: <span id="lastUpdated"></span
@@ -396,15 +732,52 @@
               <span class="badge">Scope: Inventory & Audits</span>
               <span class="badge">App: United Edit Suite</span>
             </div>
+            <div class="page-stats">
+              <div class="stat-card">
+                <span class="stat-label">Coverage</span>
+                <strong>Reports, audits, details, uploads, and recovery</strong>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Work Modes</span>
+                <strong>Desktop review, manager oversight, and tablet flow</strong>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Latest Release</span>
+                <strong id="heroVersion">v4.1.0</strong>
+              </div>
+            </div>
           </div>
           <div class="toolbar">
-            <button class="btn" id="whatsNewBtn" title="Show latest changes">
+            <button class="btn primary" id="whatsNewBtn" title="Show latest changes">
               ✨ What's New
             </button>
             <button class="btn" id="themeToggle" title="Toggle light/dark">
               🌓 Theme
             </button>
           </div>
+        </div>
+
+        <div class="quick-links" aria-label="Quick links">
+          <a class="quick-link-card" href="#reports">
+            <span class="quick-link-label">Core Workflow</span>
+            <strong>Reports</strong>
+            <p>Editing, totals, exports, split workflows, and recount handling.</p>
+          </a>
+          <a class="quick-link-card" href="#manager-reports">
+            <span class="quick-link-label">Supervisor View</span>
+            <strong>Manager Reports</strong>
+            <p>Review progress, unread activity, recounts, and questions in one place.</p>
+          </a>
+          <a class="quick-link-card" href="#audits">
+            <span class="quick-link-label">Field Review</span>
+            <strong>Audits</strong>
+            <p>Prepare printouts, tablet sessions, imports, and recovery workflows.</p>
+          </a>
+          <a class="quick-link-card" href="#troubleshooting">
+            <span class="quick-link-label">Fast Fixes</span>
+            <strong>Troubleshooting</strong>
+            <p>Jump straight to the most common inventory issues and their fixes.</p>
+          </a>
         </div>
 
         <section id="what-is">
@@ -1353,6 +1726,10 @@
       document.getElementById("lastUpdated").textContent =
         d.toLocaleDateString();
       document.getElementById("year").textContent = d.getFullYear();
+      const heroVersion = document.getElementById("heroVersion");
+      if (heroVersion) {
+        heroVersion.textContent = `v${CURRENT_VERSION}`;
+      }
 
       // ===== Build TOC from sections =====
       const toc = document.getElementById("toc");
@@ -1386,10 +1763,6 @@
           search.focus();
         }
       });
-
-      if (window.innerWidth < 900) {
-        sections.forEach((s) => (s.style.maxHeight = "38px"));
-      }
 
       // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach((a) => {
