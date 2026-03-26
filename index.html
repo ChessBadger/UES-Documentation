@@ -68,8 +68,16 @@
           Helvetica,
           Arial;
         background:
-          radial-gradient(circle at top left, rgba(124, 182, 255, 0.16), transparent 30%),
-          radial-gradient(circle at top right, rgba(62, 209, 177, 0.12), transparent 28%),
+          radial-gradient(
+            circle at top left,
+            rgba(124, 182, 255, 0.16),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(62, 209, 177, 0.12),
+            transparent 28%
+          ),
           linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 22%),
           var(--bg);
         color: var(--text);
@@ -162,9 +170,7 @@
       }
       .brand h1 {
         font-family:
-          "Aptos Display",
-          "Segoe UI Variable Display",
-          "Trebuchet MS",
+          "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS",
           sans-serif;
         font-size: 17px;
         margin: 0;
@@ -233,7 +239,11 @@
         border: 1px solid var(--border);
         border-radius: 28px;
         background:
-          radial-gradient(circle at top right, rgba(124, 182, 255, 0.18), transparent 35%),
+          radial-gradient(
+            circle at top right,
+            rgba(124, 182, 255, 0.18),
+            transparent 35%
+          ),
           linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 55%),
           linear-gradient(180deg, var(--surface), var(--surface-2));
         box-shadow: var(--shadow);
@@ -266,9 +276,7 @@
       }
       .page-title h2 {
         font-family:
-          "Aptos Display",
-          "Segoe UI Variable Display",
-          "Trebuchet MS",
+          "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS",
           sans-serif;
         font-size: clamp(2.2rem, 4vw, 3.4rem);
         line-height: 1.05;
@@ -430,9 +438,7 @@
         gap: 14px;
         margin: 0 0 10px;
         font-family:
-          "Aptos Display",
-          "Segoe UI Variable Display",
-          "Trebuchet MS",
+          "Aptos Display", "Segoe UI Variable Display", "Trebuchet MS",
           sans-serif;
         font-size: 24px;
         letter-spacing: -0.02em;
@@ -554,7 +560,12 @@
       hr {
         border: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--border), transparent);
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border),
+          transparent
+        );
         margin: 28px 0;
       }
 
@@ -720,35 +731,19 @@
           <div class="page-intro">
             <p class="page-kicker">Field Operations Guide</p>
             <h2 id="overview">United Edit Suite Documentation</h2>
-            <p class="page-subtitle">
-              Searchable guidance for reports, audits, manager workflows,
-              recovery, and day-of-inventory troubleshooting across desktop and
-              tablet use.
-            </p>
+
             <div class="badges">
               <span class="badge"
                 >Last updated: <span id="lastUpdated"></span
               ></span>
-              <span class="badge">Scope: Inventory & Audits</span>
-              <span class="badge">App: United Edit Suite</span>
-            </div>
-            <div class="page-stats">
-              <div class="stat-card">
-                <span class="stat-label">Coverage</span>
-                <strong>Reports, audits, details, uploads, and recovery</strong>
-              </div>
-              <div class="stat-card">
-                <span class="stat-label">Work Modes</span>
-                <strong>Desktop review, manager oversight, and tablet flow</strong>
-              </div>
-              <div class="stat-card">
-                <span class="stat-label">Latest Release</span>
-                <strong id="heroVersion">v4.1.0</strong>
-              </div>
             </div>
           </div>
           <div class="toolbar">
-            <button class="btn primary" id="whatsNewBtn" title="Show latest changes">
+            <button
+              class="btn primary"
+              id="whatsNewBtn"
+              title="Show latest changes"
+            >
               ✨ What's New
             </button>
             <button class="btn" id="themeToggle" title="Toggle light/dark">
@@ -761,22 +756,40 @@
           <a class="quick-link-card" href="#reports">
             <span class="quick-link-label">Core Workflow</span>
             <strong>Reports</strong>
-            <p>Editing, totals, exports, split workflows, and recount handling.</p>
+            <p>
+              Editing, totals, exports, split workflows, and recount handling.
+            </p>
+          </a>
+          <a class="quick-link-card" href="#finalize">
+            <span class="quick-link-label">Wrap-Up</span>
+            <strong>Finalize</strong>
+            <p>
+              Generate final reports, create backups, and finish the inventory
+              day.
+            </p>
           </a>
           <a class="quick-link-card" href="#manager-reports">
             <span class="quick-link-label">Supervisor View</span>
             <strong>Manager Reports</strong>
-            <p>Review progress, unread activity, recounts, and questions in one place.</p>
+            <p>
+              Review progress, unread activity, recounts, and questions in one
+              place.
+            </p>
           </a>
           <a class="quick-link-card" href="#audits">
             <span class="quick-link-label">Field Review</span>
             <strong>Audits</strong>
-            <p>Prepare printouts, tablet sessions, imports, and recovery workflows.</p>
+            <p>
+              Prepare printouts, tablet sessions, imports, and recovery
+              workflows.
+            </p>
           </a>
           <a class="quick-link-card" href="#troubleshooting">
             <span class="quick-link-label">Fast Fixes</span>
             <strong>Troubleshooting</strong>
-            <p>Jump straight to the most common inventory issues and their fixes.</p>
+            <p>
+              Jump straight to the most common inventory issues and their fixes.
+            </p>
           </a>
         </div>
 
@@ -804,6 +817,36 @@
             United (new uploads, items marked as printed). Refresh syncs those
             changes into UES.
           </p>
+          <h4>Main window layout</h4>
+          <ul>
+            <li>
+              <strong>Managers/Auditors</strong> contains
+              <span class="kbd">Manager Reports</span> and
+              <span class="kbd">Audits</span>.
+            </li>
+            <li>
+              <strong>Data</strong> contains
+              <span class="kbd">View Details</span> and
+              <span class="kbd">View All Uploads</span>.
+            </li>
+            <li>
+              <strong>Reference Views</strong> contains
+              <span class="kbd">View Production</span>,
+              <span class="kbd">View Prior Inventory</span>, and
+              <span class="kbd">View Emergency Backups</span>.
+            </li>
+            <li>
+              <strong>Finalize</strong> contains
+              <span class="kbd">Print Final Reports</span>,
+              <span class="kbd">Create Backup</span>, and
+              <span class="kbd">Print Cost Report</span> when available.
+            </li>
+            <li>
+              <strong>Prep Tools</strong> contains
+              <span class="kbd">Print Worksheet</span> and
+              <span class="kbd">Create Cards</span>.
+            </li>
+          </ul>
           <div class="callout danger">
             <strong>Mark-as-Printed behavior:</strong>
             UES recognizes items <em>marked as printed in United</em>, but
@@ -815,9 +858,10 @@
         <section id="Cards">
           <h3>Create Cards</h3>
           <p>
-            Open <span class="kbd">Create Cards</span> on the right and choose
-            your customer under <span class="kbd">DC Setup</span> to create DC5
-            cards for the current inventory.
+            Open <span class="kbd">Create Cards</span> under
+            <strong>Prep Tools</strong> and choose your customer under
+            <span class="kbd">DC Setup</span> to create DC5 cards for the
+            current inventory.
           </p>
         </section>
 
@@ -825,10 +869,10 @@
           <h3>Worksheets</h3>
           <h4>Print Worksheets</h4>
           <p>
-            Open <span class="kbd">Print Worksheets</span> on the right to
-            generate worksheet PDFs. You can choose to show
-            <strong>no categories</strong>, <strong>categories</strong>, or
-            <strong>category groups</strong>.
+            Open <span class="kbd">Print Worksheet</span> under
+            <strong>Prep Tools</strong> to generate worksheet PDFs. You can
+            choose to show <strong>no categories</strong>,
+            <strong>categories</strong>, or <strong>category groups</strong>.
           </p>
 
           <h4>Highlights</h4>
@@ -853,9 +897,9 @@
           <h3>Category Cost Report</h3>
           <ul>
             <li>
-              When all areas marked as printed are selected in the main window
-              the
-              <span class="kbd">Print Cost Report</span> button will appear.
+              When all areas marked as printed are selected in the main window,
+              the <span class="kbd">Print Cost Report</span> button appears in
+              <strong>Finalize</strong>.
             </li>
             <li>
               This will generate a category report displaying the retail, cost,
@@ -875,12 +919,39 @@
             </li>
             <li>
               With areas selected, choose
-              <strong>View Reports</strong> (financial-style) or
-              <strong>View Scan Reports</strong> (pieces/units style).
+              <strong>Open Reports</strong> or
+              <strong>Open Scan Reports</strong>.
             </li>
             <li>
-              <strong>View Recounts: </strong> displays all areas that contain
-              locations marked for recount, if recount has not been completed.
+              Filters at the top of the list include
+              <strong>Printed</strong>, <strong>Areas Not Counted</strong>, and
+              <strong>View Recounts</strong>.
+            </li>
+          </ul>
+        </section>
+
+        <section id="finalize">
+          <h3>Finalize</h3>
+          <p>
+            Use <strong>Finalize</strong> on the right side of the main window
+            for end-of-day reporting and backup tasks.
+          </p>
+          <ul>
+            <li>
+              <strong>Print Final Reports</strong> opens a picker where you can
+              choose areas, choose category detail level, and generate the final
+              report set.
+            </li>
+            <li>
+              <strong>Create Backup</strong> lets you choose the United backup
+              zip name and location, then also drops fresh
+              <span class="kbd">Audits</span> and
+              <span class="kbd">Manager Reports</span> folders into that same
+              location.
+            </li>
+            <li>
+              <strong>Print Cost Report</strong> appears here when it is
+              available for the current selection.
             </li>
           </ul>
         </section>
