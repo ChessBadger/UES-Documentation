@@ -330,6 +330,32 @@
         font-size: 12px;
       }
 
+      .changelog-list {
+        margin: 8px 0 0;
+        padding-left: 20px;
+      }
+
+      .changelog-groups {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .changelog-group {
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: 10px;
+        padding: 10px 12px;
+      }
+
+      .changelog-group-title {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+
       @media (max-width: 1000px) {
         .app {
           grid-template-columns: 1fr;
@@ -1201,11 +1227,37 @@
       // ===== Release / Changelog data =====
       const UES_RELEASES = [
         {
+          version: "4.1.0",
+          date: "2026-03-27",
+          title: "Manager Reports & Main Window UI Updates",
+          groups: [
+            {
+              title: "Manager Reports",
+              items: [
+                "Manager Reports display when areas have been seen but not marked as reviewed yet, to help supervisors track progress.",
+                "Areas that were grouped together now share a single row in Manager Reports",
+                "Employee recount tracking and accuracy added to Manager Reports",
+                "Read receipts added to Manager Reports chat log",
+                "Manager Reports window is now live when active and no longer requires refresh to update.",
+              ],
+            },
+            {
+              title: "Main Window",
+              items: [
+                "Main window buttons now update in real time based on Manager Reports state.",
+                "Main window UI updates: restyled buttons, new icons, and improved layout for better usability and visual clarity.",
+                "Final Reports Button added to Main Window - allows user to generate reports without opening report windows",
+                "Backup Buttons added to Main Window - generates united zip backup, manager reports, and audits backup",
+              ],
+            },
+          ],
+        },
+        {
           version: "4.0.0",
           date: "2026-03-05",
           title: "Manager Reports & Optimizations",
           highlights: [
-            "Manager Reprrts ready for production release",
+            "Manager Reports ready for production release",
             "Efficiency optimizations for main window and report windows.",
             "Audit/Manager Report backup verification before closing application.",
             "Strikethrough for gone locations in worksheets.",
@@ -1354,6 +1406,19 @@
       // ===== Render changelog =====
       const changelogList = document.getElementById("changelogList");
       if (changelogList) {
+        const createHighlightList = (items) => {
+          const ul = document.createElement("ul");
+          ul.className = "changelog-list";
+
+          items.forEach((text) => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            ul.appendChild(li);
+          });
+
+          return ul;
+        };
+
         UES_RELEASES.forEach((release, index) => {
           const wrapper = document.createElement("div");
           wrapper.className = "changelog-item";
@@ -1363,7 +1428,7 @@
 
           const title = document.createElement("span");
           title.className = "changelog-title";
-          title.textContent = `v${release.version} – ${release.title}`;
+          title.textContent = `v${release.version} - ${release.title}`;
 
           const date = document.createElement("span");
           date.className = "badge";
@@ -1381,15 +1446,30 @@
             meta.appendChild(newBadge);
           }
 
-          const ul = document.createElement("ul");
-          release.highlights.forEach((text) => {
-            const li = document.createElement("li");
-            li.textContent = text;
-            ul.appendChild(li);
-          });
-
           wrapper.appendChild(meta);
-          wrapper.appendChild(ul);
+
+          if (Array.isArray(release.groups) && release.groups.length > 0) {
+            const groups = document.createElement("div");
+            groups.className = "changelog-groups";
+
+            release.groups.forEach((group) => {
+              const section = document.createElement("div");
+              section.className = "changelog-group";
+
+              const heading = document.createElement("div");
+              heading.className = "changelog-group-title";
+              heading.textContent = group.title;
+
+              section.appendChild(heading);
+              section.appendChild(createHighlightList(group.items));
+              groups.appendChild(section);
+            });
+
+            wrapper.appendChild(groups);
+          } else {
+            wrapper.appendChild(createHighlightList(release.highlights));
+          }
+
           changelogList.appendChild(wrapper);
         });
       }
