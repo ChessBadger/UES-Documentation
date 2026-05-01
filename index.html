@@ -949,10 +949,6 @@
               <span class="kbd">Manager Reports</span> folders into that same
               location.
             </li>
-            <li>
-              <strong>Print Cost Report</strong> appears here when it is
-              available for the current selection.
-            </li>
           </ul>
         </section>
 
@@ -1671,6 +1667,35 @@
       // ===== Release / Changelog data =====
       const UES_RELEASES = [
         {
+          version: "4.3.0",
+          date: "2026-03-27",
+          title: "Manager Reports & Main Window UI Updates",
+          highlights: [
+            "Audit site is forced to landscape mode on tablet, regardless of device orientation.",
+            "Forced user backup menu when closing app if Manager Reports or Audits have not been backed up yet.",
+            "Manager Reports QR added to Manager Reports window for easier tablet connection.",
+          ],
+          groups: [
+            {
+              title: "Details Window",
+              items: [
+                "Allow user to toggle price/units columns between ext and regular values.",
+                "Allow user to print any selected/highlighted records in the window.",
+              ],
+            },
+            {
+              title: "Finalizing",
+              items: [
+                "Added category cost report and one prior + var report to final reports window.",
+                "UI and layout updates in final reports window.",
+                "Allow user to choose zip file name/overwrite when using create backup option.",
+                "Diagnostics logging added to backup process to help troubleshoot any issues in app performance.",
+                "Zip files from backup at higher compression to save file size.",
+              ],
+            },
+          ],
+        },
+        {
           version: "4.2.0",
           date: "2026-04-14",
           title: "Modas Compatibility & Tweaks",
@@ -1903,6 +1928,13 @@
 
           wrapper.appendChild(meta);
 
+          if (
+            Array.isArray(release.highlights) &&
+            release.highlights.length > 0
+          ) {
+            wrapper.appendChild(createHighlightList(release.highlights));
+          }
+
           if (Array.isArray(release.groups) && release.groups.length > 0) {
             const groups = document.createElement("div");
             groups.className = "changelog-groups";
@@ -1921,8 +1953,6 @@
             });
 
             wrapper.appendChild(groups);
-          } else {
-            wrapper.appendChild(createHighlightList(release.highlights));
           }
 
           changelogList.appendChild(wrapper);
