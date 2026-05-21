@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
@@ -836,6 +836,11 @@
               <span class="kbd">View Emergency Backups</span>.
             </li>
             <li>
+              <strong>Comparison tools</strong> are available from the main area
+              list for recounts, BOH comparisons, and prior inventory
+              comparisons.
+            </li>
+            <li>
               <strong>Finalize</strong> contains
               <span class="kbd">Print Final Reports</span>,
               <span class="kbd">Create Backup</span>, and
@@ -897,17 +902,25 @@
           <h3>Category Cost Report</h3>
           <ul>
             <li>
-              When all areas marked as printed are selected in the main window,
-              the <span class="kbd">Print Cost Report</span> button appears in
-              <strong>Finalize</strong>.
+              In United, open the category setup, find the designated category,
+              and enter the cost percentage in the
+              <strong>Cost Pct</strong> field. For example, enter
+              <code>25</code> for a 25% cost adjustment.
             </li>
             <li>
-              This will generate a category report displaying the retail, cost,
-              variance, and percentage chosen based on the values in United.
+              After refreshing UES, open
+              <span class="kbd">Print Final Reports</span> and select
+              <span class="kbd">Category Cost Report</span>.
             </li>
             <li>
-              All values are converted using the values in the "Cost Pct" field
-              of each category in United
+              For full store resets, the final reports window can prompt for the
+              prior zip backup so UES can pull prior data into the category
+              report.
+            </li>
+            <li>
+              The report displays retail, cost, variance, and the percentage
+              chosen from United. Values are converted using the
+              <strong>Cost Pct</strong> value for each category.
             </li>
           </ul>
         </section>
@@ -930,6 +943,35 @@
           </ul>
         </section>
 
+        <section id="comparison-windows">
+          <h3>Comparison Windows</h3>
+          <p>
+            Version 4.4.0 adds shared comparison windows for recounts, BOH, and
+            prior inventory checks. Each window shows side-by-side SKU detail so
+            you can compare two sources before changing the final file.
+          </p>
+          <ul>
+            <li>
+              <strong>Recount comparison</strong> compares the original count
+              against the recount.
+            </li>
+            <li>
+              To prepare a recount for this window, have the employee count in
+              the original location and set the recount area to all 1s. After
+              the data is brought into the final file and UES is refreshed, the
+              recount appears at the top of the main list.
+            </li>
+            <li>
+              <strong>BOH comparison</strong> compares BOH quantity against the
+              current count quantity.
+            </li>
+            <li>
+              <strong>Last inventory comparison</strong> compares the prior
+              inventory against the current inventory.
+            </li>
+          </ul>
+        </section>
+
         <section id="finalize">
           <h3>Finalize</h3>
           <p>
@@ -947,7 +989,8 @@
               zip name and location, then also drops fresh
               <span class="kbd">Audits</span> and
               <span class="kbd">Manager Reports</span> folders into that same
-              location.
+              location. This main-window backup replaces the backup buttons that
+              were previously in Audits and Manager Reports.
             </li>
           </ul>
         </section>
@@ -1149,11 +1192,14 @@
           <ul>
             <li>
               <strong>Refresh</strong> reloads the exported report files and
-              updates the summary cards.
+              updates the summary cards. When the tablet is connected, Manager
+              Reports also updates live and no longer requires a manual refresh
+              to see tablet changes.
             </li>
             <li>
-              <strong>Backup</strong> creates a zip backup that includes Audits
-              plus the current Manager Reports export files.
+              Backups are handled from the main window with
+              <span class="kbd">Create Backup</span>. Manager Reports no longer
+              has its own backup button.
             </li>
             <li>
               <strong>Chat Log</strong> opens the shared chat history and clears
@@ -1367,10 +1413,10 @@
           <h4>Daily backups of audits (PDF + logs)</h4>
           <ul>
             <li>
-              Use <strong>Back Up Exports</strong> at day’s end to select a
-              folder. UES creates an <code>/audits</code> subfolder with a PDF
-              per location (green = accepted, red = rejected, no color =
-              unchanged).
+              Use the main window <span class="kbd">Create Backup</span> at
+              day's end. UES creates the United zip backup and includes the
+              current Audits and Manager Reports exports in the same backup
+              location.
             </li>
             <li>
               Each import produces a text log capturing what changed, when the
@@ -1425,6 +1471,12 @@
               <strong>View Prior Inventory</strong>: Allows the user to select
               the last inventory backup and view the final file of that
               inventory in the details window.
+            </li>
+            <li>
+              <strong>Check for Updates</strong>: Use
+              <span class="kbd">Options</span> &gt;
+              <span class="kbd">Check for Updates</span> to update the
+              application from inside UES.
             </li>
           </ul>
           <hr />
