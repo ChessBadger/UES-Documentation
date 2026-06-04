@@ -957,7 +957,7 @@
             </li>
             <li>
               To prepare a recount for this window, have the employee count in
-              the original location and set the recount area to all 1s. After
+              the original location and set the recount area to '11111' After
               the data is brought into the final file and UES is refreshed, the
               recount appears at the top of the main list.
             </li>
@@ -968,6 +968,12 @@
             <li>
               <strong>Last inventory comparison</strong> compares the prior
               inventory against the current inventory.
+            </li>
+            <li>
+              <strong>Adjustment comparison</strong> Is highlighted at the top
+              when area '22222' is uploaded. For all skus in that area, it will
+              find all other locations containing those skus. The user can then
+              keep or remove those found skus form the listed locations
             </li>
           </ul>
         </section>
@@ -1718,6 +1724,17 @@
     <script>
       // ===== Release / Changelog data =====
       const UES_RELEASES = [
+        {
+          version: "4.4.5",
+          date: "2026-06-04",
+          title: "Feature Additions ",
+          highlights: [
+            "Prior Inventory Comparison window: added filters and more in depth searching.",
+            "Auto Update Areas: Now check all 3 priors.",
+            "Added new Adjustments window and Adjustment Comparison review flow.",
+            "New generic and account specific report options added to Print Final Reports window.",
+          ],
+        },
         {
           version: "4.4.0",
           date: "2026-05-22",
