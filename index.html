@@ -943,6 +943,29 @@
           </ul>
         </section>
 
+        <section id="modas-completion-status">
+          <h3>MODAS Completion Status</h3>
+          <p>
+            Version 4.5.0 adds completion status icons for areas and locations
+            when using MODAS.
+          </p>
+          <ul>
+            <li>
+              Enable
+              <span class="kbd">Show Area Completion Checkmarks</span> in the
+              options menu to show icons when UES detects that an area or
+              location has been finished.
+            </li>
+            <li>
+              A <strong>green circle</strong> means the location is complete.
+            </li>
+            <li>
+              A <strong>hollow yellow circle</strong> means no new records have
+              been added to the location for 20 or more minutes.
+            </li>
+          </ul>
+        </section>
+
         <section id="comparison-windows">
           <h3>Comparison Windows</h3>
           <p>
@@ -1725,14 +1748,16 @@
       // ===== Release / Changelog data =====
       const UES_RELEASES = [
         {
-          version: "4.4.5",
+          version: "4.5.0",
           date: "2026-06-04",
           title: "Feature Additions ",
           highlights: [
             "Prior Inventory Comparison window: added filters and more in depth searching.",
-            "Auto Update Areas: Now check all 3 priors.",
             "Added new Adjustments window and Adjustment Comparison review flow.",
             "New generic and account specific report options added to Print Final Reports window.",
+            "Added MODAS completion status icons for areas and locations.",
+            "Auto detect duplicate uploads when using Wintakes",
+            "Added clear/restore buttons [DEMO ONLY]",
           ],
         },
         {
