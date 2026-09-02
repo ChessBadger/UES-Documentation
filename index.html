@@ -1062,6 +1062,49 @@
               (hides/shows) underlying categories.
             </li>
           </ul>
+          <h4>Prior inventory issue review</h4>
+          <p>
+            UES compares the current count with the previous inventory in the
+            background and flags only locations with strong signs of a counting
+            problem. You can continue using reports while the check runs.
+          </p>
+          <ul>
+            <li>
+              <strong>Inventory Issues</strong>, below the category controls,
+              shows how many flagged locations are in the areas currently on
+              screen. Select it to review those locations together.
+            </li>
+            <li>
+              A small red flag beside a location means that location has an
+              issue. Select the flag, or open <strong>Edit</strong> and choose
+              <strong>Review Inventory</strong>, to see its comparison.
+            </li>
+            <li>
+              <strong>Issues</strong> shows only high-confidence findings, such
+              as an unusually large quantity change or a likely missed block of
+              items. Items found elsewhere in the same area and probable
+              assortment replacements are filtered to reduce false warnings.
+            </li>
+            <li>
+              <strong>All SKUs</strong> shows the complete current-and-prior
+              comparison. Use search or <strong>Differences only</strong> to
+              narrow the list. Prior-only items show as
+              <strong>Missing</strong>, while current-only items are labeled as
+              new since the previous inventory.
+            </li>
+            <li>
+              Sort <strong>Change</strong> to rank items by the size of their
+              variance. Double-click a row to open its Details view, or
+              right-click it to copy the SKU.
+            </li>
+          </ul>
+          <div class="callout warn">
+            <strong>Previous inventory source:</strong> UES uses
+            <span class="kbd">final_prior.dbf</span> from the current backup
+            when available. If it is not included, opening Review Inventory asks
+            you to select the previous inventory ZIP. That selection is
+            remembered only for the current inventory during this app session.
+          </div>
           <h4>Bulk actions</h4>
           <ul>
             <li>
@@ -1755,6 +1798,8 @@
             "Add current employee location tracking",
             "UES Mobile: Added manager reports with full details",
             "Add Kroger RX import for 80910-80930",
+            "Allow user to export data to Modas from within UES",
+            "Added prior inventory issue flags in report windows.",
           ],
         },
         {
